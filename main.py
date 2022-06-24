@@ -25,9 +25,13 @@ else:
 
 def translate_hanlder(update: Update, context: CallbackContext):
     try:
-        text = update.message.text.split(" ", 1)[1]
-        text = text.replace(" ", "+")
-        url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q={0}".format(text)
+        text = update.message.text.split(" ", 1)
+        comm = text[0]
+        sentence = text[1].replace(" ", "+")
+        if comm == "/say":
+            url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q={0}".format(sentence)
+        elif comm == "/kol":
+            url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ar&q={0}".format(sentence)
         update.message.bot.send_audio(update.message.chat_id, url)
     except Exception as error:
         update.message.reply_text("انقلع ذاكر")
@@ -37,5 +41,6 @@ if __name__ == "__main__":
     updater = Updater(TOKEN, use_context=True)
 
     updater.dispatcher.add_handler(CommandHandler("say", translate_hanlder))
+    updater.dispatcher.add_handler(CommandHandler("kol", translate_hanlder))
 
     run()

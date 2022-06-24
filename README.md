@@ -1,0 +1,1 @@
+# giath-translate-bot

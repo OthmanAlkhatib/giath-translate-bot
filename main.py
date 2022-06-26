@@ -1,5 +1,6 @@
 from telegram.ext import CommandHandler, Updater, CallbackContext
 from telegram import Update
+from googletrans import Translator
 import os
 import logging
 import sys
@@ -23,7 +24,7 @@ else:
     logger.error("No mode specified")
     sys.exit(1)
 
-def translate_hanlder(update: Update, context: CallbackContext):
+def voice_hanlder(update: Update, context: CallbackContext):
     try:
         text = update.message.text.split(" ", 1)
         comm = text[0]
@@ -37,10 +38,19 @@ def translate_hanlder(update: Update, context: CallbackContext):
         update.message.reply_text("انقلع ذاكر")
         print(error)
 
+
+def translate_hanlder(update: Update, context: CallbackContext):
+    text = update.message.text.split(" ", 1)[1]
+    translator = Translator()
+    translation = translator.translate(text, dest="ar")
+    update.message.reply_text(translation.text)
+
+
 if __name__ == "__main__":
     updater = Updater(TOKEN, use_context=True)
 
-    updater.dispatcher.add_handler(CommandHandler("say", translate_hanlder))
-    updater.dispatcher.add_handler(CommandHandler("kol", translate_hanlder))
+    updater.dispatcher.add_handler(CommandHandler("say", voice_hanlder))
+    updater.dispatcher.add_handler(CommandHandler("kol", voice_hanlder))
+    updater.dispatcher.add_handler(CommandHandler("trans", translate_hanlder))
 
     run()

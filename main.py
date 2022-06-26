@@ -51,6 +51,6 @@ if __name__ == "__main__":
 
     updater.dispatcher.add_handler(CommandHandler("say", voice_hanlder))
     updater.dispatcher.add_handler(CommandHandler("kol", voice_hanlder))
-    updater.dispatcher.add_handler(CommandHandler("trans", translate_hanlder))
+    updater.dispatcher.add_handler(CommandHandler("t", translate_hanlder))
 
     run()

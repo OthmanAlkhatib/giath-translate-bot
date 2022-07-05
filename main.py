@@ -40,10 +40,13 @@ def voice_hanlder(update: Update, context: CallbackContext):
 
 
 def translate_hanlder(update: Update, context: CallbackContext):
-    text = update.message.text.split(" ", 1)[1]
-    translator = Translator()
-    translation = translator.translate(text, dest="ar")
-    update.message.reply_text(translation.text)
+    try:
+        text = update.message.text.split(" ", 1)[1]
+        translator = Translator()
+        translation = translator.translate(text, dest="ar")
+        update.message.reply_text(translation.text)
+    except Exception as error:
+        update.message.bot.send_video(update.message.chat_id, "https://t.me/mstoda3/231")
 
 
 if __name__ == "__main__":
